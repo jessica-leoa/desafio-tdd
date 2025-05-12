@@ -1,25 +1,44 @@
-const Queue = require('./queue')
+const Queue = require('./queue');
 
 describe('Queue', () => {
-  it('Deve criar uma fila', () => {
-    const queue = new Queue()
+  let queue;
 
-    expect(queue).toEqual({ elements: []})
-  })
+  beforeEach(() => {
+    queue = new Queue(); 
+  });
+
+  it('Deve criar uma fila vazia', () => {
+    expect(queue).toEqual({ elements: [] });
+  });
 
   it('Deve ser capaz de calcular o tamanho da fila', () => {
-    // Seu código aqui
-  })
+    expect(queue.size()).toBe(0); 
+    queue.elements = [1, 2, 3]; 
+    expect(queue.size()).toBe(3);
+  });
 
   it('Deve ser capaz de adicionar um item na fila', () => {
-   // Seu código aqui
-  })
+    queue.add('item1');
+    expect(queue.elements).toEqual(['item1']);
+    queue.add('item2');
+    expect(queue.elements).toEqual(['item1', 'item2']);
+  });
 
-  it('Deve escolher o primeiro item da fila', () => {
-    // Seu código aqui
-  })
+  it('Deve escolher o primeiro item da fila (peek)', () => {
+    queue.add('item1');
+    queue.add('item2');
+    expect(queue.peek()).toBe('item1'); 
+    expect(queue.size()).toBe(2); 
+  });
 
-  it('Deve remover o primeiro item da fila', () => {
-    // Seu código aqui
-  })
-})
+  it('Deve remover o primeiro item da fila (dequeue)', () => {
+    queue.add('item1');
+    queue.add('item2');
+    expect(queue.dequeue()).toBe('item1'); 
+    expect(queue.elements).toEqual(['item2']); 
+  });
+
+  it('Deve retornar undefined se dequeue() for chamado em fila vazia', () => {
+    expect(queue.dequeue()).toBeUndefined();
+  });
+});
